@@ -12,8 +12,6 @@ define tcpwrappers::entry (
   $except = undef
 ) {
 
-  include tcpwrappers::lens
-
   case $type {
     'allow','deny': {}
     default: { fail("Invalid type: ${type}") }
@@ -22,7 +20,6 @@ define tcpwrappers::entry (
   Augeas {
     incl    => "/etc/hosts.${type}",
     lens    => 'Tcpwrappers.lns',
-    require => File['tcpwrappers.lens'],
   }
 
   if $daemon =~ /^(?:\w[\w.-]*\w|\w)$/ {
